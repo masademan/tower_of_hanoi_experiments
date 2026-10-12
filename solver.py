@@ -36,9 +36,9 @@ def hanoi_solver(instruction_list: list[tuple[int, int]], n_rings: int, src_num:
         return
 
     other_pos = 2 + 1 + 0 - (src_num + dest_num)
-    hanoi_solver(instruction_list, src_num, other_pos, n_rings - 1)
+    hanoi_solver(instruction_list, n_rings - 1, src_num, other_pos)
     instruction_list.append((src_num, dest_num))
-    hanoi_solver(instruction_list, other_pos, dest_num, n_rings - 1)
+    hanoi_solver(instruction_list, n_rings - 1, other_pos, dest_num)
 
 
 def move_ring(rings_in_pos: list[list[int]], src_num: int, dest_num: int) -> None:

@@ -3,6 +3,7 @@ import sys
 import shutil
 import subprocess
 from typing import Any
+from time import sleep
 from solver import (
     is_solved,
     move_ring,
@@ -31,13 +32,14 @@ def print_rings_in_pos(
     rings_in_pos: list[list[int]],
     peg_extra_height: int = 1,
     padding_between_pegs: int = 2,
-    padding_on_edges: int = 1,
-    do_base: bool = False,
+    padding_on_edges: int = 3,
+    do_base: bool = True,
     ring_char: str = "@",
     base_char: str = "=",
     padding_char: str = " ",
     do_pause: bool = False,
-    do_clear: bool = True,
+    do_clear: bool = False,
+    secs_per_step: float = 0,
 ) -> None:
     num_rings = get_num_rings(rings_in_pos)
     terminal_size = shutil.get_terminal_size()
@@ -89,13 +91,16 @@ def print_rings_in_pos(
 
     print()
     if do_pause:
-        input()
+        if secs_per_step == 0:
+            input()
+        else:
+            sleep(secs_per_step)
 
 
 def do_instructions_and_display(
     instruction_list: list[tuple[int, int]],
     rings_in_pos: list[list[int]],
-    print_rings_kwargs: dict[str, Any] = {"do_base": True, "padding_on_edges": 3},
+    print_rings_kwargs: dict[str, Any] = {},
 ) -> bool:
     """
     Follow the instructions from the hanoi_solver function
