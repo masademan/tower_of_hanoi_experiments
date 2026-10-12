@@ -1,15 +1,15 @@
-import sys
-import solver
-import display
+from display import do_instructions_and_display
+from solver import hanoi_solver, create_starting_rings_in_pos
 
 if __name__ == "__main__":
     NUM_RINGS = 3
 
-    instruction_list = []
-    solver.hanoi_solver(instruction_list, 0, 2, NUM_RINGS)
+    instructions = []
+    rings = create_starting_rings_in_pos(NUM_RINGS)
 
-    print("\n".join([str(item) for item in instruction_list]))
+    hanoi_solver(instructions, NUM_RINGS)
 
-    rings_in_pos = solver.create_starting_rings_in_pos(NUM_RINGS)
+    success = do_instructions_and_display(instructions, rings, {"do_base": True, "padding_on_edges": 3, "do_pause": True})
 
-    display.do_instructions_and_display(instruction_list, rings_in_pos, 0, 2)
+    if success:
+        print("Solved!")

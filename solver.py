@@ -17,7 +17,7 @@ solver(unused, dest, n_rings - 1)
 import sys
 
 
-def hanoi_solver(instruction_list: list[tuple[int, int]], src_num: int, dest_num: int, n_rings: int) -> None:
+def hanoi_solver(instruction_list: list[tuple[int, int]], n_rings: int, src_num: int = 0, dest_num: int = 2) -> None:
     """
     Makes a list of instructions to solve the tower of hanoi
     """
@@ -77,7 +77,7 @@ def get_num_rings(rings_in_pos: list[list[int]]) -> int:
 
 
 def is_solved(rings_in_pos: list[list[int]]) -> bool:
-    num_rings = get_num_rings()
+    num_rings = get_num_rings(rings_in_pos)
 
     return rings_in_pos == [[], [], list(range(num_rings, 0, -1))]
 
@@ -90,23 +90,11 @@ def create_starting_rings_in_pos(num_rings: int) -> list[list[int]]:
     return [list(range(num_rings, 0, -1)), [], []]
 
 
-def do_instructions(
-    instruction_list: list[tuple[int, int]], rings_in_pos: list[list[int]], src_num: int, dest_num: int
-) -> bool:
+def do_instructions(instruction_list: list[tuple[int, int]], rings_in_pos: list[list[int]]) -> bool:
     """
     Follow the instructions from the hanoi_solver function
     Returns true if the puzzle was solved and all the instructions were valid, otherwise return false
     """
-    if not (0 <= src_num < 3):
-        print("src_num has to be between 0 and 2 inclusive", file=sys.stderr)
-        sys.exit(-1)
-    if not (0 <= dest_num < 3):
-        print("dest_num has to be between 0 and 2 inclusive", file=sys.stderr)
-        sys.exit(-1)
-    if src_num == dest_num:
-        print("src_num and dest_num can't be the same", file=sys.stderr)
-        sys.exit(-1)
-
     if not is_valid_ring_pos(rings_in_pos):
         print("The starting ring configuration was invalid", file=sys.stderr)
         return False
@@ -132,10 +120,10 @@ if __name__ == "__main__":
     NUM_RINGS = 3
 
     instruction_list = []
-    hanoi_solver(instruction_list, 0, 2, NUM_RINGS)
+    hanoi_solver(instruction_list, NUM_RINGS)
 
     print("\n".join([str(item) for item in instruction_list]))
 
     rings_in_pos = create_starting_rings_in_pos(NUM_RINGS)
 
-    print(do_instructions(instruction_list, rings_in_pos, 0, 2))
+    print(do_instructions(instruction_list, rings_in_pos))
