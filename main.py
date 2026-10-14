@@ -5,9 +5,9 @@ if __name__ == "__main__":
     NUM_RINGS = 5
 
     instructions = []
-    rings = create_starting_rings_in_pos(NUM_RINGS)
+    rings = create_starting_rings_in_pos(NUM_RINGS, src=1)
 
-    hanoi_solver(instructions, NUM_RINGS)
+    hanoi_solver(instructions, NUM_RINGS, src_num=1, dest_num=2)
 
     # success = do_instructions_and_display(instructions, rings, {"do_pause": True, "do_clear": True})  # Manual next step
     success = do_instructions_and_display(instructions, rings, {"do_pause": True, "do_clear": True, "secs_per_step": 0.1})  # Animated steps

@@ -82,12 +82,15 @@ def is_solved(rings_in_pos: list[list[int]]) -> bool:
     return rings_in_pos == [[], [], list(range(num_rings, 0, -1))]
 
 
-def create_starting_rings_in_pos(num_rings: int) -> list[list[int]]:
+def create_starting_rings_in_pos(num_rings: int, src: int = 0) -> list[list[int]]:
     if num_rings <= 0:
         print("The number of rings has to be positive", file=sys.stderr)
         sys.exit(-1)
 
-    return [list(range(num_rings, 0, -1)), [], []]
+    ring_pos = [[], [], []]
+    ring_pos[src] = list(range(num_rings, 0, -1))
+
+    return ring_pos
 
 
 def do_instructions(instruction_list: list[tuple[int, int]], rings_in_pos: list[list[int]]) -> bool:
